@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: billing-sync
+    description: Offline-first billing workspace synchronization
 paths:
   /healthz:
     get:
@@ -24,6 +26,62 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /billing/sync/events:
+    get:
+      operationId: listSyncEvents
+      tags: [billing-sync]
+      summary: List changes for a billing workspace
+      parameters:
+        - name: workspaceKey
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 32
+            maxLength: 128
+        - name: after
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 250
+      responses:
+        "200":
+          description: A page of changes and the next sync cursor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SyncEventsPage"
+        "400":
+          description: Invalid request
+    post:
+      operationId: pushSyncEvents
+      tags: [billing-sync]
+      summary: Store offline changes for a billing workspace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SyncBatchInput"
+      responses:
+        "200":
+          description: Changes accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SyncBatchResult"
+        "400":
+          description: Invalid request
 components:
   schemas:
     HealthStatus:
@@ -33,4 +91,92 @@ components:
           type: string
       required:
         - status
+    BillingEntityType:
+      type: string
+      enum:
+        - product
+        - customer
+        - invoice
+        - supplier
+        - purchase
+        - return
+        - expense
+        - warranty
+    BillingSyncEventInput:
+      type: object
+      additionalProperties: false
+      properties:
+        eventId:
+          type: string
+          minLength: 1
+          maxLength: 128
+        entityType:
+          $ref: "#/components/schemas/BillingEntityType"
+        entityId:
+          type: string
+          minLength: 1
+          maxLength: 128
+        operation:
+          type: string
+          enum: [upsert, delete]
+        payload:
+          type: ["object", "null"]
+          additionalProperties: true
+        occurredAt:
+          type: string
+          format: date-time
+      required:
+        - eventId
+        - entityType
+        - entityId
+        - operation
+        - payload
+        - occurredAt
+    SyncBatchInput:
+      type: object
+      additionalProperties: false
+      properties:
+        workspaceKey:
+          type: string
+          minLength: 32
+          maxLength: 128
+        events:
+          type: array
+          maxItems: 500
+          items:
+            $ref: "#/components/schemas/BillingSyncEventInput"
+      required:
+        - workspaceKey
+        - events
+    BillingSyncEvent:
+      allOf:
+        - $ref: "#/components/schemas/BillingSyncEventInput"
+        - type: object
+          properties:
+            sequence:
+              type: integer
+          required:
+            - sequence
+    SyncEventsPage:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: "#/components/schemas/BillingSyncEvent"
+        nextCursor:
+          type: integer
+      required:
+        - events
+        - nextCursor
+    SyncBatchResult:
+      type: object
+      properties:
+        accepted:
+          type: integer
+        latestSequence:
+          type: integer
+      required:
+        - accepted
+        - latestSequence
 

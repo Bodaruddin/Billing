@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Circuit & Co. Billing"
+description = "An offline-first point-of-sale and inventory app for electronics retailers. Create non-GST invoices, manage stock and customers, track IMEI and warranty details, and sync local sales when connectivity returns."
+version = "1.0.0"
+id = "artifacts/electronics-billing"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20205
+
+[services.development]
+run = "pnpm --filter @workspace/electronics-billing run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/electronics-billing", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/electronics-billing/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20205"
+BASE_PATH = "/"

@@ -1,0 +1,18 @@
+{
+  "name": "Circuit & Co. Billing",
+  "short_name": "Circuit Billing",
+  "description": "Offline-first billing and inventory for electronics retailers.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#f7f6f1",
+  "theme_color": "#315e4b",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
