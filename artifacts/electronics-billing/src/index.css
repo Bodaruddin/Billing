@@ -18,21 +18,21 @@
   --font-sans: var(--app-font-sans); --font-mono: var(--app-font-mono);
 }
 :root {
-  --background: 42 40% 96%; --foreground: 217 25% 18%; --border: 38 20% 86%;
-  --card: 40 35% 99%; --card-foreground: 217 25% 18%; --popover: 40 35% 99%; --popover-foreground: 217 25% 18%;
-  --primary: 163 45% 31%; --primary-foreground: 0 0% 100%; --secondary: 38 31% 91%; --secondary-foreground: 217 25% 22%;
-  --muted: 38 24% 92%; --muted-foreground: 215 12% 48%; --accent: 34 76% 57%; --accent-foreground: 217 25% 18%;
-  --destructive: 4 61% 50%; --destructive-foreground: 0 0% 100%; --input: 38 20% 83%; --ring: 163 45% 31%;
-  --sidebar: 218 28% 19%; --sidebar-foreground: 42 30% 93%; --app-font-sans: 'DM Sans', sans-serif;
+  --background: 210 40% 98%; --foreground: 222 40% 16%; --border: 214 24% 87%;
+  --card: 0 0% 100%; --card-foreground: 222 40% 16%; --popover: 0 0% 100%; --popover-foreground: 222 40% 16%;
+  --primary: 222 58% 27%; --primary-foreground: 0 0% 100%; --secondary: 214 40% 94%; --secondary-foreground: 222 42% 22%;
+  --muted: 214 35% 94%; --muted-foreground: 218 16% 46%; --accent: 218 74% 48%; --accent-foreground: 0 0% 100%;
+  --destructive: 4 61% 50%; --destructive-foreground: 0 0% 100%; --input: 214 24% 83%; --ring: 222 58% 27%;
+  --sidebar: 222 54% 17%; --sidebar-foreground: 0 0% 98%; --app-font-sans: 'DM Sans', sans-serif;
   --app-font-mono: 'Space Mono', monospace; --radius: 0.85rem;
 }
 .dark {
-  --background: 218 25% 12%; --foreground: 40 28% 92%; --border: 218 17% 26%;
-  --card: 218 22% 16%; --card-foreground: 40 28% 92%; --popover: 218 22% 16%; --popover-foreground: 40 28% 92%;
-  --primary: 157 43% 48%; --primary-foreground: 218 28% 12%; --secondary: 218 18% 23%; --secondary-foreground: 40 28% 92%;
-  --muted: 218 18% 21%; --muted-foreground: 215 12% 66%; --accent: 35 76% 62%; --accent-foreground: 218 25% 12%;
-  --destructive: 4 61% 57%; --destructive-foreground: 0 0% 100%; --input: 218 17% 30%; --ring: 157 43% 48%;
-  --sidebar: 218 30% 9%; --sidebar-foreground: 40 28% 92%;
+  --background: 222 35% 9%; --foreground: 214 35% 94%; --border: 220 22% 24%;
+  --card: 222 30% 14%; --card-foreground: 214 35% 94%; --popover: 222 30% 14%; --popover-foreground: 214 35% 94%;
+  --primary: 218 72% 68%; --primary-foreground: 222 42% 13%; --secondary: 222 25% 21%; --secondary-foreground: 214 35% 94%;
+  --muted: 220 24% 19%; --muted-foreground: 215 18% 68%; --accent: 218 78% 68%; --accent-foreground: 222 42% 13%;
+  --destructive: 4 61% 57%; --destructive-foreground: 0 0% 100%; --input: 220 22% 30%; --ring: 218 72% 68%;
+  --sidebar: 222 58% 8%; --sidebar-foreground: 214 35% 94%;
 }
 * { box-sizing: border-box; }
 body { margin: 0; font-family: var(--app-font-sans); background: hsl(var(--background)); color: hsl(var(--foreground)); -webkit-font-smoothing: antialiased; }
@@ -118,3 +118,65 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .manual-scan-form {margin-top:17px}.manual-scan-row {display:flex;gap:8px}.manual-scan-row .field-input {flex:1;min-width:0}.manual-scan-form>p {font-size:9px;color:hsl(var(--muted-foreground));line-height:1.5;margin:9px 0 0}
 @media (max-width:600px) {.scanner-dialog {padding:16px}.camera-view {height:220px}.manual-scan-row .button-primary {padding:0 9px;font-size:9px}}
 .workspace-key-input {position:relative}.workspace-key-input .field-input {padding-right:43px}.key-action {position:absolute;right:3px;top:3px;width:34px;height:34px;border:0;border-radius:6px;background:transparent;color:hsl(var(--muted-foreground));display:grid;place-items:center;cursor:pointer}.key-action:hover {background:hsl(var(--muted));color:hsl(var(--foreground))}.workspace-key-actions {display:flex;gap:8px;margin-top:11px}.workspace-key-actions .button-secondary {min-height:36px}
+
+/* AR BILLING navy-and-white identity */
+:root {
+  --brand-navy: #172d57;
+  --brand-blue: #315b9a;
+  --brand-blue-soft: #eaf0fb;
+}
+.dark {
+  --brand-navy: #0a1734;
+  --brand-blue: #a9c2f5;
+  --brand-blue-soft: #263958;
+}
+.brand-symbol { background:#fff; color:#172d57; }
+.brand-name { color:#fff; }
+.brand-name>span { color:#bfd0f2; }
+.brand-mini { background:#fff; color:#172d57; }
+.shop-avatar { background:#fff; color:#172d57; }
+.user-avatar { background:#eaf0fb; color:#244a83; }
+.dark .user-avatar { background:#263958; color:#c7d8fb; }
+.nav-active { color:#fff; background:rgba(155,180,232,.19); box-shadow:inset 3px 0 #fff; }
+.nav-active svg { color:#fff; }
+.hero-strip { color:#fff; background:linear-gradient(135deg,#122448,#1d3a70); }
+.hero-strip h2 { color:#fff; }
+.hero-strip p,.hero-kicker { color:#d7e2f5; }
+.live-dot { background:#fff; }
+.hero-mark { color:#d5e2fa; }
+.button-accent { color:#172d57; background:#fff; }
+.button-accent:hover { color:#122448; background:#eaf0fb; }
+.button-accent .keycap { color:#315b9a; border-color:#aebfe0; }
+.metric-icon.green,.metric-icon.amber,.metric-icon.rose,.metric-icon.slate { background:#eaf0fb; color:#315b9a; }
+.dark .metric-icon.green,.dark .metric-icon.amber,.dark .metric-icon.rose,.dark .metric-icon.slate { background:#263958; color:#c7d8fb; }
+.trend,.text-link,.restock-link,.note-link,.settings-device,.bill-empty svg,.collect-due,.quantity-good,.row-action,.empty-state svg,.top-product strong { color:#315b9a; }
+.dark .text-link { color:#a9c2f5; }
+.bar { background:#c5d4ef; }
+.bar-current { background:#315b9a; }
+.text-link:hover { color:#172d57; }
+.invoice-avatar,.product-avatar,.supplier-avatar,.person-avatar,.tile-icon { background:#eaf0fb; color:#315b9a; }
+.dark .invoice-avatar,.dark .product-avatar,.dark .supplier-avatar,.dark .person-avatar,.dark .tile-icon { background:#263958; color:#c7d8fb; }
+.paid-tag,.status-good { color:#244a83; background:#eaf0fb; }
+.dark .paid-tag,.dark .status-good { color:#c7d8fb; background:#263958; }
+.daily-note { background:#edf2fb; }
+.dark .daily-note { background:#1c2b49; }
+.note-icon { background:#fff; color:#315b9a; }
+.dark .note-icon { background:#263958; color:#c7d8fb; }
+.daily-note p { color:#53627b; }
+.dark .daily-note p { color:#c4d0e4; }
+.button-primary,.complete-sale { color:#fff; background:#172d57; }
+.button-primary:hover,.complete-sale:hover { background:#24477f; }
+.toast-message { color:#fff; background:#172d57; }
+.toast-message svg { color:#dbe6fb; }
+.collect-due:hover { background:#eaf0fb; }
+.dark .collect-due:hover { background:#263958; }
+.tile-add { color:#315b9a; background:#eaf0fb; }
+.payment-option.active { border-color:#7898cf; background:#eaf0fb; color:#244a83; }
+.dark .payment-option.active { background:#263958; color:#c7d8fb; }
+.settings-device,.green-check { color:#315b9a; }
+.green-check { background:#eaf0fb; }
+.theme-choice.selected { border-color:#7898cf; background:#eaf0fb; color:#244a83; }
+.dark .theme-choice.selected { border-color:#5877ac; background:#263958; color:#c7d8fb; }
+.pay-report .progress-track i { background:#315b9a !important; }
+.camera-view { background:#122448; }
+.camera-frame { border-color:#dbe6fb; }

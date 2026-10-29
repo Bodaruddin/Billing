@@ -1,12 +1,12 @@
 {
-  "name": "Circuit & Co. Billing",
-  "short_name": "Circuit Billing",
+  "name": "AR BILLING",
+  "short_name": "AR BILLING",
   "description": "Offline-first billing and inventory for electronics retailers.",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",
-  "background_color": "#f7f6f1",
-  "theme_color": "#315e4b",
+  "background_color": "#ffffff",
+  "theme_color": "#172d57",
   "icons": [
     {
       "src": "favicon.svg",
