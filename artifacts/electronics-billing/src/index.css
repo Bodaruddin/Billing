@@ -180,3 +180,55 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .pay-report .progress-track i { background:#315b9a !important; }
 .camera-view { background:#122448; }
 .camera-frame { border-color:#dbe6fb; }
+
+.manual-item-panel { margin-top:12px; padding:14px; border:1px solid hsl(var(--border)); border-radius:12px; background:hsl(var(--card)); }
+.manual-item-panel h4 { margin:0 0 11px; font-size:12px; }
+.manual-item-fields { display:grid; grid-template-columns:minmax(150px,2fr) repeat(3,minmax(75px,1fr)) auto; gap:8px; align-items:end; }
+.manual-item-fields label,.manual-customer-fields label { display:grid; gap:5px; min-width:0; }
+.manual-item-fields .field-label,.manual-customer-fields .field-label { margin:0; font-size:8px; }
+.manual-item-fields .field-input,.manual-customer-fields .field-input { height:38px; font-size:10px; }
+.manual-customer-fields { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:-7px 0 14px; }
+.manual-customer-fields label:last-child { grid-column:1/-1; }
+.checkout-reference { display:flex; align-items:center; gap:12px; margin:7px 0; color:hsl(var(--muted-foreground)); font-size:10px; }
+.checkout-reference .field-input { max-width:210px; height:32px; font-size:9px; }
+.billing-history { overflow:hidden; }
+.billing-history-row { display:grid; grid-template-columns:minmax(150px,1.4fr) minmax(120px,1fr) minmax(110px,.8fr) minmax(100px,.8fr) auto; align-items:center; gap:14px; padding:13px 16px; border-top:1px solid hsl(var(--border)/.75); }
+.billing-history-row:first-child { border-top:0; }
+.billing-history-row strong,.billing-history-row small { display:block; }
+.billing-history-row strong { font-size:10px; }
+.billing-history-row small { margin-top:4px; color:hsl(var(--muted-foreground)); font-size:8px; }
+.billing-history-row .button-secondary { min-height:34px; padding:0 10px; font-size:9px; }
+.billing-history-empty { padding:45px 16px; text-align:center; color:hsl(var(--muted-foreground)); font-size:10px; }
+
+@page receipt-a4 { size:A4 portrait; margin:12mm; }
+@page receipt-a5 { size:A5 portrait; margin:8mm; }
+@page receipt-thermal80 { size:80mm 200mm; margin:2mm; }
+@page receipt-thermal58 { size:58mm 200mm; margin:2mm; }
+@media print {
+  html,body,#root { min-height:0!important; height:auto!important; overflow:visible!important; }
+  body * { visibility:hidden!important; }
+  .receipt-dialog__backdrop { position:static!important; display:block!important; padding:0!important; overflow:visible!important; background:#fff!important; }
+  .receipt-dialog { position:static!important; display:block!important; width:auto!important; max-width:none!important; max-height:none!important; overflow:visible!important; border:0!important; border-radius:0!important; box-shadow:none!important; }
+  .receipt-dialog__header,.receipt-dialog__controls { display:none!important; }
+  .receipt-dialog__body,.receipt-dialog__preview-area { display:block!important; width:auto!important; min-height:0!important; max-height:none!important; overflow:visible!important; padding:0!important; background:#fff!important; border:0!important; }
+  body .receipt-paper.print-area { position:absolute!important; inset:0 auto auto 0!important; display:block!important; width:100%!important; max-width:none!important; min-height:0!important; height:auto!important; margin:0!important; padding:0!important; overflow:visible!important; color:#111!important; background:#fff!important; box-shadow:none!important; transform:none!important; page:receipt-a4; }
+  body .receipt-paper.print-area,.receipt-paper.print-area * { visibility:visible!important; }
+  body .receipt-paper--a5.print-area { page:receipt-a5; }
+  body .receipt-paper--thermal80.print-area { page:receipt-thermal80; }
+  body .receipt-paper--thermal58.print-area { page:receipt-thermal58; }
+}
+
+@media (max-width:820px) {
+  .billing-history-row { grid-template-columns:minmax(130px,1fr) minmax(100px,.8fr) auto; gap:10px; }
+  .billing-history-row .history-date,.billing-history-row .history-method { display:none; }
+}
+@media (max-width:600px) {
+  .manual-item-fields { grid-template-columns:1fr 1fr; }
+  .manual-item-fields label:first-child { grid-column:1/-1; }
+  .manual-item-fields .button-primary { min-height:38px; }
+  .manual-customer-fields { grid-template-columns:1fr; }
+  .manual-customer-fields label:last-child { grid-column:auto; }
+  .checkout-reference { align-items:flex-start; flex-direction:column; gap:5px; }
+  .checkout-reference .field-input { width:100%; max-width:none; }
+  .billing-history-row { grid-template-columns:minmax(0,1fr) auto; }
+}

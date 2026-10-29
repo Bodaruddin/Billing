@@ -2,7 +2,9 @@ export type Product = { id:string; name:string; category:string; sku:string; bar
 export type Customer = { id:string; name:string; phone:string; email:string; dues:number };
 export type Supplier = { id:string; name:string; phone:string; email:string; balance:number };
 export type InvoiceItem = { productId:string; name:string; quantity:number; unitPrice:number; costPrice:number; discount:number; imei:string };
-export type Invoice = { id:string; number:string; date:string; customerId:string; items:InvoiceItem[]; discount:number; paymentMethod:string; paymentAmount:number; total:number; due:number };
+export type Invoice = { id:string; number:string; date:string; customerId:string; items:InvoiceItem[]; discount:number; paymentMethod:string; paymentAmount:number; total:number; due:number; customerName?:string; customerPhone?:string; customerAddress?:string; paymentReference?:string };
+export type ReceiptPaperSize = 'a4'|'a5'|'thermal80'|'thermal58';
+export type ReceiptLayout = 'standard'|'compact';
 export type Purchase = { id:string; supplierId:string; date:string; items:{productId:string; name:string; quantity:number; unitPrice:number}[]; total:number };
 export type ReturnRecord = { id:string; invoiceId:string; productId:string; quantity:number; reason:string; amount:number; date:string };
 export type Expense = { id:string; title:string; category:string; amount:number; date:string };
@@ -30,10 +32,10 @@ export const seed:DataState = {
  returns:[{id:'r1',invoiceId:'CC-2025-0409',productId:'p2',quantity:1,reason:'Left earbud not pairing',amount:1299,date:today}],
  expenses:[{id:'e1',title:'Shop rent · May',category:'Rent',amount:28000,date:today},{id:'e2',title:'Broadband & phone',category:'Utilities',amount:1899,date:today},{id:'e3',title:'Courier supplies',category:'Operations',amount:740,date:today}],
  warranties:[{id:'w1',invoiceNumber:'CC-2025-0418',product:'Samsung Galaxy A35 5G',customer:'Priya Nair',phone:'+91 99870 12345',imei:'354812340001829',expires:new Date(Date.now()+31536000000).toISOString().slice(0,10),status:'Active'},{id:'w2',invoiceNumber:'CC-2025-0402',product:'JBL Go 4 Bluetooth Speaker',customer:'Aarav Mehta',phone:'+91 98765 43210',imei:'—',expires:new Date(Date.now()+86400000*24).toISOString().slice(0,10),status:'Expiring soon'}],
- syncQueue:[],settings:{shopName:'Circuit & Co.',phone:'+91 22 4012 1948',address:'Shop 14, Lamington Road, Mumbai 400004',workspaceKey:''}
+ syncQueue:[],settings:{shopName:'Circuit & Co.',phone:'+91 22 4012 1948',address:'Shop 14, Lamington Road, Mumbai 400004',workspaceKey:'',receiptPaperSize:'thermal80',receiptLayout:'standard'}
 };
 const dbName='circuit-and-co-local'; const dbVersion=1;
 function openDb():Promise<IDBDatabase>{return new Promise((resolve,reject)=>{const req=indexedDB.open(dbName,dbVersion);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains('state'))db.createObjectStore('state')};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
-export async function loadState():Promise<DataState>{try{if(!('indexedDB'in window))throw new Error('IndexedDB unavailable');const db=await openDb();const value=await new Promise<DataState|undefined>((resolve,reject)=>{const r=db.transaction('state','readonly').objectStore('state').get('main');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});if(value)return value;await saveState(seed);return seed}catch{try{const raw=localStorage.getItem('circuit-state');if(raw)return JSON.parse(raw)}catch{}return seed}}
+export async function loadState():Promise<DataState>{try{if(!('indexedDB'in window))throw new Error('IndexedDB unavailable');const db=await openDb();const value=await new Promise<DataState|undefined>((resolve,reject)=>{const r=db.transaction('state','readonly').objectStore('state').get('main');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});if(value)return{...value,settings:{...seed.settings,...value.settings}};await saveState(seed);return seed}catch{try{const raw=localStorage.getItem('circuit-state');if(raw){const value=JSON.parse(raw) as DataState;return{...value,settings:{...seed.settings,...value.settings}}}}catch{}return seed}}
 export async function saveState(state:DataState):Promise<void>{try{if(!('indexedDB'in window))throw new Error();const db=await openDb();await new Promise<void>((resolve,reject)=>{const r=db.transaction('state','readwrite').objectStore('state').put(state,'main');r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error)})}catch{try{localStorage.setItem('circuit-state',JSON.stringify(state))}catch{}}}
 export const uid=()=>`${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`;
